@@ -80,7 +80,7 @@ namespace BBCards.Controllers
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPlayer", new { id = player.PlayerId }, player);
+            return CreatedAtAction(nameof(GetPlayer), new { id = player.PlayerId }, player);
         }
 
         // DELETE: api/Players/5

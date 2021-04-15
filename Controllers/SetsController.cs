@@ -52,7 +52,8 @@ namespace BBCards.Controllers
                     Id = c.Id,
                     Player = c.Player,
                     Team = c.Team,
-                })
+                }),
+                ManufacturerId = cardSet.ManufacturerId
             };
         }
 
