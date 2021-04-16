@@ -34,6 +34,15 @@ namespace BBCards
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BBCards", Version = "v1" });
             });
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://127.0.0.1:5500")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +58,8 @@ namespace BBCards
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
