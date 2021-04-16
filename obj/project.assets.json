@@ -7344,11 +7344,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jonat\\source\\repos\\BBCards\\BBCards\\BBCards.csproj",
+      "projectUniqueName": "C:\\Users\\jonat\\source\\repos\\BBCards\\BallCardWebAPI\\BBCards.csproj",
       "projectName": "BBCards",
-      "projectPath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BBCards\\BBCards.csproj",
+      "projectPath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BallCardWebAPI\\BBCards.csproj",
       "packagesPath": "C:\\Users\\jonat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BBCards\\obj\\",
+      "outputPath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BallCardWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
