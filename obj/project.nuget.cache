@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LTt0K4+TxpyTSTC37c8iogkizgdMORge6dlw/HeI4M/rEmZUt/XgycTp6hC/pA51sJ5Kw+YYUlGP3INJ4n3VFQ==",
+  "dgSpecHash": "9U7Whir7vLTgIZ7x3ayZNwi1Tg3Hj9mtnEfNqfqUtS5jBh24P+MCVi1aE0c2EI8tlm4xhHz1vJ8n+Txdi2Etfg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BBCards\\BBCards.csproj",
+  "projectFilePath": "C:\\Users\\jonat\\source\\repos\\BBCards\\BallCardWebAPI\\BBCards.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jonat\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\jonat\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

@@ -26,11 +26,13 @@ namespace BBCards.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManufacturerListItem>>> GetManufacturer()
         {
-            return await _context.Manufacturer.Select(m => new ManufacturerListItem
+            var result = await _context.Manufacturer.Select(m => new ManufacturerListItem
             {
                 ManufacturerId = m.ManufacturerId,
                 ManufacturerName = m.ManufacturerName
             }).ToListAsync();
+
+            return result;
         }
 
         // GET: api/Manufacturers/5
@@ -52,6 +54,7 @@ namespace BBCards.Controllers
                 ManufacturerName = manufacturer.ManufacturerName,
                 Sets = manufacturer.Sets.Select(m => new SetListItem
                 {
+                    SetId = m.SetId,
                     SetName = m.SetName,
                     SetYear = m.SetYear
                 })

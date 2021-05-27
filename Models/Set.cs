@@ -14,5 +14,14 @@ namespace BBCards.Models
         public IEnumerable<Card> Cards{ get; set; }
 
         public int ManufacturerId { get; set; }
+        public Manufacturer Manufacturer { get; set; }
+    }
+
+    public class SetResponse
+    {
+        public int SetId { get; set; }
+        public string SetName { get; set; }
+        public int SetYear { get; set; }
+        public IEnumerable<Card> Cards { get; set; }
     }
 }

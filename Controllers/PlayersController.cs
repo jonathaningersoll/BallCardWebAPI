@@ -99,6 +99,25 @@ namespace BBCards.Controllers
             return NoContent();
         }
 
+
+        // Search Feature
+        [HttpGet("search/{name}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetPlayersByName(string name)
+        {
+
+            IQueryable<Player> players = _context.Players;
+
+            // thanks to https://www.pragimtech.com/blog/blazor/search-in-asp.net-core-rest-api/
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                players = players.Where(e => e.FirstName.Contains(name)
+                || e.LastName.Contains(name));
+            }
+
+            return await players.ToListAsync();
+        }
+
         private bool PlayerExists(int id)
         {
             return _context.Players.Any(e => e.PlayerId == id);
