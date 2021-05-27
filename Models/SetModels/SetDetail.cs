@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BBCards.Models.CardModels;
+using BBCards.Models.ManufacturerModels;
 
 namespace BBCards.Models.SetModels
 {
@@ -13,6 +14,6 @@ namespace BBCards.Models.SetModels
         public int SetYear { get; set; }
         public IEnumerable<CardListItem> Cards { get; set; }
 
-        public int ManufacturerId { get; set; }
+        public ManufacturerListItem Manufacturer { get; set; }
     }
 }

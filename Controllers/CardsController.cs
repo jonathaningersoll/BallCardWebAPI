@@ -33,6 +33,7 @@ namespace BBCards.Controllers
         {
             var cards = await _context.Cards.Select(c => new CardListItem
             {
+                CardIdentifier = c.CardIdentifier,
                 Id = c.Id,
                 Player = c.Player,
                 Team = c.Team

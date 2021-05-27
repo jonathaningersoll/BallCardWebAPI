@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BBCards.Models;
 using BBCards.Models.CardModels;
 using BBCards.Models.SetModels;
+using BBCards.Models.ManufacturerModels;
 
 namespace BBCards.Controllers
 {
@@ -36,6 +37,9 @@ namespace BBCards.Controllers
             var cardSet = await _context.Sets
                 .Include(s => s.Cards)
                 .ThenInclude(c => c.Player)
+                .Include(c => c.Cards)
+                .ThenInclude(c => c.Team)
+                .Include(s => s.Manufacturer)
                 .SingleAsync(s => s.SetId == id);
 
             if (cardSet == null)
@@ -50,24 +54,29 @@ namespace BBCards.Controllers
                 Cards = cardSet.Cards.Select(c => new CardListItem
                 {
                     Id = c.Id,
+                    CardIdentifier = c.CardIdentifier,
                     Player = c.Player,
                     Team = c.Team,
                 }),
-                ManufacturerId = cardSet.ManufacturerId
+                Manufacturer = new ManufacturerListItem
+                {
+                    ManufacturerId = cardSet.Manufacturer.ManufacturerId,
+                    ManufacturerName = cardSet.Manufacturer.ManufacturerName
+                }
             };
         }
 
         // PUT: api/Sets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSet(int id, Set @set)
+        public async Task<IActionResult> PutSet(int id, Set aSet)
         {
-            if (id != @set.SetId)
+            if (id != aSet.SetId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@set).State = EntityState.Modified;
+            _context.Entry(aSet).State = EntityState.Modified;
 
             try
             {
@@ -91,12 +100,12 @@ namespace BBCards.Controllers
         // POST: api/Sets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Set>> PostSet(Set @set)
+        public async Task<ActionResult<Set>> PostSet(Set aSet)
         {
-            _context.Sets.Add(@set);
+            _context.Sets.Add(aSet);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSet", new { id = @set.SetId }, @set);
+            return CreatedAtAction("GetSet", new { id = aSet.SetId }, aSet);
         }
 
         // DELETE: api/Sets/5
