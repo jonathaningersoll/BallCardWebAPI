@@ -1,3 +1,4 @@
+using BBCards.Data;
 using BBCards.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,7 @@ namespace BBCards
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("BBCardsConnection")));
+            services.AddScoped<ITeamsRepo, TeamsRepo>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -38,7 +40,8 @@ namespace BBCards
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://127.0.0.1:5500")
+                        builder.AllowAnyOrigin()
+                        //.WithOrigins("http://127.0.0.1:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });

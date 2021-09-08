@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BBCards.Models;
 using BBCards.Models.ManufacturerModels;
 using BBCards.Models.SetModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BBCards.Controllers
 {
@@ -23,6 +24,7 @@ namespace BBCards.Controllers
         }
 
         // GET: api/Manufacturers
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ManufacturerListItem>>> GetManufacturer()
         {

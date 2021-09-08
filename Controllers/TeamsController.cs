@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BBCards.Models;
+using BBCards.Data;
 
 namespace BBCards.Controllers
 {
@@ -13,33 +14,38 @@ namespace BBCards.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ITeamsRepo _teamsRepo;
 
-        public TeamsController(AppDbContext context)
+        public TeamsController(AppDbContext context, ITeamsRepo teamsRepo)
         {
-            _context = context;
+            _teamsRepo = teamsRepo;
         }
 
         // GET: api/Teams
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Team>>> GetTeams()
+        public async Task<ActionResult <IEnumerable<Team>>> GetTeams()
         {
-            return await _context.Teams.ToListAsync();
+            var teams = await _teamsRepo.GetTeams();
+            return Ok(teams);
         }
 
-        // GET: api/Teams/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Team>> GetTeam(int id)
-        {
-            var team = await _context.Teams.FindAsync(id);
 
-            if (team == null)
+
+        // GET: api/Teams/5
+        // GET Method
+        [HttpGet("{id}")]
+        public async Task<ActionResult <Team>> GetTeam(int id)
+        {
+            if (!_teamsRepo.TeamExists(id))
             {
                 return NotFound();
             }
 
+            var team = await _teamsRepo.GetTeam(id);
             return team;
         }
+
+
 
         // PUT: api/Teams/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -51,57 +57,51 @@ namespace BBCards.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(team).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
+            if(!await _teamsRepo.PutTeam(id, team)){
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TeamExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
         }
+
+
+
 
         // POST: api/Teams
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Team>> PostTeam(Team team)
+        public async Task<ActionResult <Team>> PostTeam(Team team)
         {
-            _context.Teams.Add(team);
-            await _context.SaveChangesAsync();
-
+            if(!await _teamsRepo.PostTeam(team))
+            {
+                return BadRequest();
+            }
             return CreatedAtAction("GetTeam", new { id = team.TeamId }, team);
         }
 
+
+
+
+
         // DELETE: api/Teams/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTeam(int id)
+        public async Task<ActionResult> DeleteTeam(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
+            var team = await _teamsRepo.GetTeam(id);
             if (team == null)
             {
                 return NotFound();
             }
 
-            _context.Teams.Remove(team);
-            await _context.SaveChangesAsync();
-
+            if(!await _teamsRepo.DeleteTeam(team))
+            {
+                return BadRequest();
+            }
             return NoContent();
         }
 
         private bool TeamExists(int id)
         {
-            return _context.Teams.Any(e => e.TeamId == id);
+            return _teamsRepo.TeamExists(id);
         }
     }
 }
